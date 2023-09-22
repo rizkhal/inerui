@@ -1,0 +1,25 @@
+{
+  "name": "inerui",
+  "version": "0.0.0",
+  "description": "Inerui Headless UI Component",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamaau/inerui/.git"
+  },
+  "author": {
+    "name": "Rizkhal Lamaau",
+    "email": "lamaaurizkhal@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/lamaau/inerui#readme",
+  "devDependencies": {
+    "tslib": "^2.6.2",
+    "esbuild": "^0.19.3",
+    "typescript": "^5.2.2"
+  }
+}
