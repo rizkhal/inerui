@@ -4,20 +4,30 @@
   "main": "./dist/inerui.esm.js",
   "type": "module",
   "license": "MIT",
+  "exports": {
+    "import": "./dist/inerui.esm.js"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=10"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "../../scripts/build.vue.sh",
+    "watch": "../../scripts/build.vue.sh --watch --external:vue",
     "clean": "rimraf ./dist"
   },
   "peerDependencies": {
-    "vue": "^3.2.0"
-  },
-  "dependencies": {
-    "@iconify/vue": "^4.1.1"
+    "@iconify/vue": "^4.1.1",
+    "vue": "^3.2.39"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
+    "@iconify/vue": "^4.1.1",
     "esbuild": "^0.19.3",
     "rimraf": "^5.0.1",
-    "tsc": "^2.0.4"
+    "tsc": "^2.0.4",
+    "vue": "^3.3.4"
   }
 }

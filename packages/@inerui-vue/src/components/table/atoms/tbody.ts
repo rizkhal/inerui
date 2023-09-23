@@ -2,7 +2,7 @@ import { defineComponent, h } from "vue";
 
 export default defineComponent({
   props: ["data", "columns"],
-  setup({ data, columns }, { slots }) {
+  setup({ data, columns }) {
     return () =>
       h(
         "tbody",
