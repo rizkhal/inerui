@@ -1,6 +1,16 @@
 import route from "ziggy-js";
 import { Icon } from "../atoms";
-import { defineComponent, h, ref } from "vue";
+import {
+  Transition,
+  TransitionGroup,
+  computed,
+  defineComponent,
+  h,
+  mergeProps,
+  onMounted,
+  ref,
+  toRef,
+} from "vue";
 
 type TMenu = {
   path: string;
@@ -14,8 +24,8 @@ type TMenuItem = TMenu & {
 
 const Header = defineComponent({
   setup() {
-    return () =>
-      h(
+    return () => {
+      return h(
         "div",
         {
           class:
@@ -33,6 +43,7 @@ const Header = defineComponent({
           ],
         ]
       );
+    };
   },
 });
 
@@ -40,10 +51,6 @@ export const Sidebar = defineComponent({
   props: ["menus", "onClick"],
   setup({ menus, onClick: onNavigate }) {
     const isOpen = ref<any>([]);
-
-    const toggleDropdown = (index: number) => {
-      isOpen.value[index] = !isOpen.value[index];
-    };
 
     return () =>
       h("div", { class: "w-64 sticky top-0" }, [
@@ -68,7 +75,8 @@ export const Sidebar = defineComponent({
                         h(
                           "button",
                           {
-                            onClick: () => toggleDropdown(index),
+                            onClick: () =>
+                              (isOpen.value[index] = !isOpen.value[index]),
                             class: `relative dark:text-white text-slate-700 transition hover:bg-slate-200 dark:hover:bg-slate-600 py-2 px-3 rounded-md w-full inline-flex items-center space-x-2 ${
                               childrens.filter(
                                 ({ path: p }) => route().current() === p
@@ -86,49 +94,51 @@ export const Sidebar = defineComponent({
                             }),
                           ]
                         ),
-                        h(
-                          "div",
-                          {
-                            class: `relative overflow-hidden ${
-                              isOpen.value[index] ? "h-max" : "h-0"
-                            }`,
-                          },
-                          [
-                            h(
-                              "div",
-                              {
-                                class: "mt-2 ml-5 border-l",
-                              },
-                              [
-                                childrens.map(({ text, path }) => {
-                                  return h(
-                                    "button",
-                                    {
-                                      onClick: () => onNavigate(path),
-                                      class: `group dark:text-white transition hover:text-slate-400 dark:hover:text-slate-600 py-2 px-3 rounded-md w-full inline-flex items-center space-x-2 ${
-                                        route().has(path) &&
-                                        route().current(path)
-                                          ? "text-slate-900"
-                                          : "text-slate-600"
-                                      }`,
-                                    },
-                                    [
-                                      h("span", { class: "text-sm" }, text),
-                                      h("div", {
-                                        class: `w-2 h-2 group-hover:bg-emerald-500 absolute left-[8.5px] mt-0.5 rounded-full border border-gray-100 ${
+                        h(TransitionGroup, { mode: "in-out" }, [
+                          h(
+                            "div",
+                            {
+                              class: `relative overflow-hidden transition-all ${
+                                isOpen.value[index] ? "h-max" : "h-0"
+                              }`,
+                            },
+                            [
+                              h(
+                                "div",
+                                {
+                                  class: "mt-2 ml-5 border-l",
+                                },
+                                [
+                                  childrens.map(({ text, path }) => {
+                                    return h(
+                                      "button",
+                                      {
+                                        onClick: () => onNavigate(path),
+                                        class: `group dark:text-white transition hover:text-slate-400 dark:hover:text-slate-600 py-2 px-3 rounded-md w-full inline-flex items-center space-x-2 ${
                                           route().has(path) &&
                                           route().current(path)
-                                            ? "bg-emerald-500"
-                                            : "bg-gray-600"
+                                            ? "text-primary-600"
+                                            : "text-slate-600"
                                         }`,
-                                      }),
-                                    ]
-                                  );
-                                }),
-                              ]
-                            ),
-                          ]
-                        ),
+                                      },
+                                      [
+                                        h("span", { class: "text-sm" }, text),
+                                        h("div", {
+                                          class: `w-2 h-2 group-hover:bg-primary-600 absolute left-[8.5px] mt-0.5 rounded-full border border-gray-100 ${
+                                            route().has(path) &&
+                                            route().current(path)
+                                              ? "bg-primary-600"
+                                              : "bg-gray-600"
+                                          }`,
+                                        }),
+                                      ]
+                                    );
+                                  }),
+                                ]
+                              ),
+                            ]
+                          ),
+                        ]),
                       ]
                     );
                   }
@@ -159,8 +169,8 @@ export const Layout = defineComponent({
   props: ["menus"],
   emits: ["onNavigate"],
   setup({ menus }, { slots, emit }) {
-    return () => [
-      h("div", { class: "w-full min-h-scree relative" }, [
+    return () => {
+      return h("div", { class: "w-full min-h-scree relative" }, [
         h("div", { class: "inline-flex w-full" }, [
           h(
             "div",
@@ -180,7 +190,7 @@ export const Layout = defineComponent({
             },
             [
               h("div", { class: "flex flex-col w-full" }, [
-                h(Header),
+                // h(Header),
                 h(
                   "div",
                   {
@@ -192,7 +202,7 @@ export const Layout = defineComponent({
             ]
           ),
         ]),
-      ]),
-    ];
+      ]);
+    };
   },
 });

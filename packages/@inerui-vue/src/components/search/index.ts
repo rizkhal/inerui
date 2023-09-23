@@ -1,4 +1,4 @@
-import { InputEvent } from "types/i";
+import { InputEvent } from "types/type";
 import { defineComponent, h } from "vue";
 
 export const Search = defineComponent({
