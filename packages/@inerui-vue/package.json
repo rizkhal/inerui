@@ -17,7 +17,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "../../scripts/build.vue.sh",
+    "build": "../../scripts/build.vue.sh --external:vue",
     "watch": "../../scripts/build.vue.sh --watch --external:vue",
     "clean": "rimraf ./dist"
   },

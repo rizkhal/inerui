@@ -117,7 +117,7 @@ export const Sidebar = defineComponent({
                                       "button",
                                       {
                                         onClick: () => onNavigate(path),
-                                        class: `group dark:text-white transition hover:text-slate-400 dark:hover:text-slate-600 py-2 px-3 rounded-md w-full inline-flex items-center space-x-2 ${
+                                        class: `group dark:text-white transition hover:text-primary-600 py-2 px-3 rounded-md w-full inline-flex items-center space-x-2 ${
                                           route().has(path) &&
                                           route().current(path)
                                             ? "text-primary-600"

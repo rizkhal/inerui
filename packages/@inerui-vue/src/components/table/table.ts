@@ -17,10 +17,6 @@ export const Table = defineComponent({
   setup(props: TTableProps, { emit }) {
     const loading = ref<boolean>(false);
 
-    router.on("before", () => {
-      loading.value = true;
-    });
-
     router.on("success", () => {
       loading.value = false;
     });
@@ -49,8 +45,8 @@ export const Table = defineComponent({
     );
 
     return () => {
-      return h("div", { class: "w-full" }, [
-        h("div", { class: "w-full " }, [
+      return h("div", { class: "w-full relative overflow-hidden" }, [
+        h("div", { class: "w-full relative overflow-hidden" }, [
           h(
             "div",
             {
