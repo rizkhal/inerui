@@ -127,11 +127,11 @@ export const Sidebar = defineComponent({
                                       [
                                         h("span", { class: "text-sm" }, text),
                                         h("div", {
-                                          class: `w-2 h-2 group-hover:bg-primary-600 absolute left-[8.5px] mt-0.5 rounded-full border border-gray-100 ${
+                                          class: `w-2.5 h-2.5 group-hover:bg-primary-600 absolute left-[8px] mt-0.5 rounded-full border border-gray-100 ${
                                             route().has(path) &&
                                             route().current(path)
                                               ? "bg-primary-600"
-                                              : "bg-gray-600"
+                                              : "bg-slate-300"
                                           }`,
                                         }),
                                       ]

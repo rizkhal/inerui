@@ -1,6 +1,8 @@
-import { pickBy } from "lodash";
+import { debounce, pickBy } from "lodash";
 import { Thead, Tbody, Pagination } from "./atoms";
-import { defineComponent, h, reactive, watch } from "vue";
+import { defineComponent, h, reactive, ref, watch } from "vue";
+import { router } from "@inertiajs/vue3";
+import { Search } from "components/search";
 
 export type TTableProps = {
   inertable: {
@@ -12,21 +14,23 @@ export type TTableProps = {
 export const Table = defineComponent({
   props: ["inertable"],
   emits: ["onChange"],
-  setup({ inertable }: TTableProps, { emit }) {
-    watch(
-      () => inertable,
-      (value) => {
-        console.log("props changed", value);
-      },
-      { deep: true }
-    );
+  setup(props: TTableProps, { emit }) {
+    const loading = ref<boolean>(false);
+
+    router.on("before", () => {
+      loading.value = true;
+    });
+
+    router.on("success", () => {
+      loading.value = false;
+    });
 
     const params = reactive({
-      column: inertable.data.filters?.column,
-      search: inertable.data.filters?.search,
-      direction: inertable.data.filters?.direction,
-      perpage: inertable.data.filters?.perpage ?? 15,
-      page: inertable.data.current_page,
+      column: props.inertable.data.filters?.column,
+      search: props.inertable.data.filters?.search,
+      direction: props.inertable.data.filters?.direction,
+      perpage: props.inertable.data.filters?.perpage ?? 15,
+      page: props.inertable.data.current_page,
     });
 
     const handleOnLoadPageEvent = (page: number) => {
@@ -35,36 +39,51 @@ export const Table = defineComponent({
 
     watch(
       () => params,
-      function (value: any) {
-        const params = pickBy(value);
-        emit("onChange", params);
+      (value) => {
+        loading.value = true;
+        debounce(() => {
+          emit("onChange", pickBy(value));
+        }, 300)();
       },
       { deep: true }
     );
 
     return () => {
-      return h("div", { class: "w-full relative overflow-x-auto" }, [
-        h(
-          "table",
-          {
-            class:
-              "w-full text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400",
-          },
-          [
-            h(Thead, { columns: inertable.columns }),
-            h(Tbody, {
-              data: inertable.data.data,
-              columns: inertable.columns,
-            }),
-          ]
-        ),
+      return h("div", { class: "w-full" }, [
+        h("div", { class: "w-full " }, [
+          h(
+            "div",
+            {
+              class:
+                "py-4 mb-3 w-full inline-flex items-center justify-between",
+            },
+            [h(Search), h(Search)]
+          ),
+          h(
+            "table",
+            {
+              class: "w-full relative h-full overflow-hidden",
+            },
+            [
+              h(Thead, {
+                params: params,
+                columns: props.inertable.columns,
+              }),
+              h(Tbody, {
+                loading: loading.value,
+                data: props.inertable.data.data,
+                columns: props.inertable.columns,
+              }),
+            ]
+          ),
+        ]),
         h(Pagination, {
           onLoadPage: handleOnLoadPageEvent,
-          total: inertable.data.total,
-          last: inertable.data.last_page,
-          current: inertable.data.current_page,
-          from: inertable.data.from,
-          to: inertable.data.to,
+          total: props.inertable.data.total,
+          last: props.inertable.data.last_page,
+          current: props.inertable.data.current_page,
+          from: props.inertable.data.from,
+          to: props.inertable.data.to,
         }),
       ]);
     };

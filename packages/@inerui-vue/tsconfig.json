@@ -16,7 +16,7 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "@headlessui/vue": ["src"],
+      "@inerui/vue": ["src"],
       "*": ["src/*", "node_modules/*"]
     },
     "esModuleInterop": true,
@@ -27,5 +27,5 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["dist"]
 }

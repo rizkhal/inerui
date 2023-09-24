@@ -29,9 +29,13 @@ const Tab = defineComponent({
 
       return h("div", { class: "w-full h-full relative" }, [
         h("div", { class: "relative" }, [
-          h("div", { class: "" }, [
-            h("h1", { class: "font-bold text-2xl" }, props.heading),
-            h("p", { class: "font-normal" }, props.summary),
+          h("div", { class: "flex flex-col space-y-2" }, [
+            h(
+              "h1",
+              { class: "font-bold text-2xl text-slate-800" },
+              props.heading
+            ),
+            h("p", { class: "font-normal text-slate-600" }, props.summary),
           ]),
           h(
             "div",

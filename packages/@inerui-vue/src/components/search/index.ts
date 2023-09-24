@@ -8,7 +8,7 @@ export const Search = defineComponent({
     };
 
     return () =>
-      h("form", { class: "lg:pr-3" }, [
+      h("form", { class: "" }, [
         h("div", { class: "mt-1 relative lg:w-64 xl:w-96" }, [
           h("input", {
             onInput,

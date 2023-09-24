@@ -30,12 +30,15 @@ export default defineComponent({
         "div",
         {
           class:
-            "bg-white sticky sm:flex items-center w-full sm:justify-between bottom-0 right-0 border-t border-gray-200 p-4",
+            "border border-t-transparent rounded-bl-md rounded-br-md bg-white sm:flex items-center w-full sm:justify-between border-t border-gray-200 p-4",
         },
         [
           h("div", { class: "flex items-center mb-4 sm:mb-0" }, [
             h("div", { class: "text-sm font-normal text-gray-500" }, [
-              h("span", "Menampilkan 10 dari 20"),
+              h(
+                "span",
+                `Menampilkan ${props.from} ke ${props.to} dari ${props.total}`
+              ),
             ]),
           ]),
           h("div", { class: "flex items-center space-x-3" }, [
@@ -74,7 +77,11 @@ export default defineComponent({
               h("div", { class: "text-sm font-normal text-gray-500 mx-1" }, [
                 h("p", { class: "inline-flex space-x-2" }, [
                   h("span", "dari"),
-                  h("span", { class: "text-gray-900 font-semibold" }, 10),
+                  h(
+                    "span",
+                    { class: "text-gray-900 font-semibold" },
+                    props.last
+                  ),
                 ]),
               ]),
             ]),
