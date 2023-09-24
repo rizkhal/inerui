@@ -1,6 +1,6 @@
 import { defineComponent, h } from "vue";
 
-export const Card = defineComponent({
+export const Button = defineComponent({
   setup() {
     return () =>
       h(

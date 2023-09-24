@@ -1,16 +1,7 @@
 import route from "ziggy-js";
 import { Icon } from "../atoms";
-import {
-  Transition,
-  TransitionGroup,
-  computed,
-  defineComponent,
-  h,
-  mergeProps,
-  onMounted,
-  ref,
-  toRef,
-} from "vue";
+import { router } from "@inertiajs/vue3";
+import { Transition, defineComponent, h, ref } from "vue";
 
 type TMenu = {
   path: string;
@@ -51,6 +42,18 @@ export const Sidebar = defineComponent({
   props: ["menus", "onClick"],
   setup({ menus, onClick: onNavigate }) {
     const isOpen = ref<any>([]);
+
+    router.on("navigate", () => {
+      menus.map(({ childrens }: TMenuItem, index: number) => {
+        if (childrens) {
+          isOpen.value[index] = childrens.filter(
+            ({ path: p }) => route().current() === p
+          ).length
+            ? true
+            : false;
+        }
+      });
+    });
 
     return () =>
       h("div", { class: "w-64 sticky top-0" }, [
@@ -94,11 +97,11 @@ export const Sidebar = defineComponent({
                             }),
                           ]
                         ),
-                        h(TransitionGroup, { mode: "in-out" }, [
+                        h(Transition, { mode: "in-out" }, [
                           h(
                             "div",
                             {
-                              class: `relative overflow-hidden transition-all ${
+                              class: `relative transition-all duration-500 ${
                                 isOpen.value[index] ? "h-max" : "h-0"
                               }`,
                             },
@@ -106,7 +109,7 @@ export const Sidebar = defineComponent({
                               h(
                                 "div",
                                 {
-                                  class: "mt-2 ml-5 border-l",
+                                  class: "ml-5 border-l",
                                 },
                                 [
                                   childrens.map(({ text, path }) => {

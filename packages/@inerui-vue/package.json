@@ -1,11 +1,13 @@
 {
   "name": "@inerui/vue",
   "version": "0.0.1",
+  "types": "./types/type.d.ts",
   "main": "./dist/inerui.esm.js",
   "type": "module",
   "license": "MIT",
   "exports": {
-    "import": "./dist/inerui.esm.js"
+    "import": "./dist/inerui.esm.js",
+    "types": "./types/type.d.ts"
   },
   "sideEffects": false,
   "engines": {

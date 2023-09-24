@@ -1,14 +1,17 @@
 import { defineComponent, h } from "vue";
-import { Base } from "./atoms/default";
+import { Default, TAlertDefaultProps } from "./atoms";
 
-const Primary = defineComponent({
-  setup() {
+const Alert = defineComponent({
+  props: ["label", "message", "variant", "icon"],
+  setup({ label, message, variant, icon }: TAlertDefaultProps) {
     return () =>
-      h(Base, {
-        label: "Info Alert!",
-        message: "Change a few things up and try submitting again.",
+      h(Default, {
+        icon,
+        variant,
+        label,
+        message,
       });
   },
 });
 
-export { Primary };
+export { Alert };

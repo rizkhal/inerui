@@ -27,13 +27,9 @@ const Tab = defineComponent({
           h("span", label),
         ]);
 
-      const renderContent = h(props.tabs[selected.value].component, {
-        class: "",
-      });
-
       return h("div", { class: "w-full h-full relative" }, [
         h("div", { class: "relative" }, [
-          h("div", { class: "bg-red-500" }, [
+          h("div", { class: "" }, [
             h("h1", { class: "font-bold text-2xl" }, props.heading),
             h("p", { class: "font-normal" }, props.summary),
           ]),
@@ -58,8 +54,11 @@ const Tab = defineComponent({
                         onClick: () => {
                           selected.value = index;
                         },
-                        class:
-                          "inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-primary-600 hover:border-primary-500 dark:hover:text-primary-300",
+                        class: `inline-block p-2 border-b-2 rounded-t-lg hover:text-primary-600 hover:border-primary-500 dark:hover:text-primary-300 transition-all duration-300 ${
+                          index === selected.value
+                            ? "border-primary-500"
+                            : "border-transparent"
+                        }`,
                       },
                       icon ? withIcon(label, icon) : onlyText(label)
                     );
@@ -69,7 +68,7 @@ const Tab = defineComponent({
             ]
           ),
         ]),
-        renderContent,
+        h(props.tabs[selected.value].component),
       ]);
     };
   },
