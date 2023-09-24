@@ -22,6 +22,7 @@
     "clean": "rimraf ./dist"
   },
   "peerDependencies": {
+    "@inertiajs/vue3": "^1.0.11",
     "@iconify/vue": "^4.1.1",
     "vue": "^3.2.39"
   },

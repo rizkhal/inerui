@@ -7,8 +7,7 @@ export default defineComponent({
       h(
         "tbody",
         {
-          class:
-            "text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400",
+          class: "text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400",
         },
         [
           data.map((item: any, i: number) => {
@@ -17,7 +16,7 @@ export default defineComponent({
               {
                 key: i.toString(),
                 class:
-                  "bg-white border-b dark:bg-gray-800 dark:border-gray-700",
+                  "bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-200 transition-all",
               },
               [
                 columns.map((column: any, i: number) => {
@@ -26,9 +25,9 @@ export default defineComponent({
                     {
                       key: i.toString(),
                       scope: "col",
-                      class: "px-6 py-3 text-red-500",
+                      class: "p-3 text-slate-700",
                     },
-                    h("button", {}, item[column.column])
+                    h("span", { class: "text-xs" }, item[column.column])
                   );
                 }),
               ]
