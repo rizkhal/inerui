@@ -16,7 +16,7 @@ echo $input
 sharedOptions=()
 sharedOptions+=("--bundle")
 sharedOptions+=("--platform=browser")
-sharedOptions+=("--target=es2020")
+sharedOptions+=("--target=es2019")
 
 # Generate actual builds
 $esbuild $input --format=esm  --outfile=$outdir/$name.esm.js --sourcemap ${sharedOptions[@]} $@
