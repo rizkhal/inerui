@@ -11,5 +11,5 @@
 - [ ] Button
 - [ ] Chart
 - [ ] Card
-- [ ] Tab
+- [x] Tab
 - [ ] Table
