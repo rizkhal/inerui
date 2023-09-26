@@ -6,9 +6,7 @@
 > [!WARNING]
 > Under Development Purpose
 
-## Components
-
-### Vue
+## Vue Components
 - [ ] Alert
 - [ ] Button
 - [ ] Chart
