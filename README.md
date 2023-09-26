@@ -6,10 +6,10 @@
 > [!WARNING]
 > Under Development Purpose
 
-## Vue Components
+## Vue
+- [ ] Layout
 - [ ] Alert
 - [ ] Button
 - [ ] Chart
-- [ ] Card
 - [x] Tab
 - [ ] Table
