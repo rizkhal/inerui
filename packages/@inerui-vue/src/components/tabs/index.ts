@@ -7,16 +7,23 @@ export type TTabsMenuLists = {
   component?: any;
 };
 
-export type TProps = {
+export type TTabProps = {
   heading?: string;
   summary?: string;
   tabs: Array<TTabsMenuLists>;
 };
 
 const Tab = defineComponent({
+  name: "Tab",
   props: ["heading", "summary", "tabs"],
-  setup(props: TProps) {
+  emits: ["change"],
+  setup(props: TTabProps, { emit, slots }) {
     const selected = ref<number>(0);
+
+    const handleOnChange = (index: number) => {
+      selected.value = index;
+      emit("change", index);
+    };
 
     return () => {
       const onlyText = (label: string) => h("span", label);
@@ -27,16 +34,22 @@ const Tab = defineComponent({
           h("span", label),
         ]);
 
-      return h("div", { class: "w-full h-full relative" }, [
-        h("div", { class: "relative" }, [
-          h("div", { class: "flex flex-col space-y-2" }, [
+      const heading =
+        (props.heading || props.summary) &&
+        h("div", { class: "flex flex-col space-y-2" }, [
+          props.heading &&
             h(
               "h1",
               { class: "font-bold text-2xl text-slate-800" },
               props.heading
             ),
+          props.summary &&
             h("p", { class: "font-normal text-slate-600" }, props.summary),
-          ]),
+        ]);
+
+      return h("div", { class: "w-full h-full relative" }, [
+        h("div", { class: "relative" }, [
+          slots.heading?.() || heading,
           h(
             "div",
             {
@@ -55,9 +68,7 @@ const Tab = defineComponent({
                       "button",
                       {
                         key: index.toString(),
-                        onClick: () => {
-                          selected.value = index;
-                        },
+                        onClick: () => handleOnChange(index),
                         class: `inline-block p-2 border-b-2 rounded-t-lg hover:text-primary-600 hover:border-primary-500 dark:hover:text-primary-300 transition-all duration-300 ${
                           index === selected.value
                             ? "border-primary-500"
