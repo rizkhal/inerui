@@ -3,9 +3,9 @@ import Backdrop from "./backdrop";
 
 export default defineComponent({
   props: ["loading", "data", "columns"],
-  setup(props) {
-    return () =>
-      h("tbody", {}, [
+  setup(props, { slots }) {
+    return () => {
+      return h("tbody", {}, [
         props.loading && h(Backdrop),
         props.data.map((item: any, i: number) => {
           return h(
@@ -23,12 +23,15 @@ export default defineComponent({
                     scope: "col",
                     class: "p-3 text-slate-700",
                   },
-                  h("span", { class: "text-xs" }, item[column.column])
+                  slots[column.column]
+                    ? slots[column.column]?.({ row: item })
+                    : item[column.column]
                 );
               }),
             ]
           );
         }),
       ]);
+    };
   },
 });

@@ -65,17 +65,24 @@ export default defineComponent({
               [h(Icon, { icon: "heroicons:chevron-left" })]
             ),
             h("div", { class: "flex flex-row items-center" }, [
-              h("input", {
-                min: 1,
-                max: props.last,
-                type: "number",
-                value: page.value,
-                onInput: () => emit("loadPage", page),
-                class:
-                  "bg-gray-50 mr-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-[4rem] p-2.5",
-              }),
+              // TODO: handle loadPage event for page change using input
+              // h("input", {
+              //   min: 1,
+              //   max: props.last,
+              //   type: "number",
+              //   value: page.value,
+              //   onInput: () => emit("loadPage", page),
+              //   class:
+              //     "bg-gray-50 mr-2 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-[4rem] p-2.5",
+              // }),
               h("div", { class: "text-sm font-normal text-gray-500 mx-1" }, [
                 h("p", { class: "inline-flex space-x-2" }, [
+                  h("span", "Halaman"),
+                  h(
+                    "span",
+                    { class: "text-gray-900 font-semibold" },
+                    page.value
+                  ),
                   h("span", "dari"),
                   h(
                     "span",

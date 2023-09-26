@@ -16,7 +16,7 @@ export type TTableProps = {
 export const Table = defineComponent({
   props: ["inertable"],
   emits: ["change"],
-  setup(props: TTableProps, { emit }) {
+  setup(props: TTableProps, { slots, emit }) {
     const loading = ref<boolean>(false);
 
     router.on("success", () => {
@@ -57,6 +57,13 @@ export const Table = defineComponent({
       { deep: true }
     );
 
+    const mappedSlots: any = {};
+    for (const key in slots) {
+      if (typeof slots[key] === "function") {
+        mappedSlots[key] = slots[key];
+      }
+    }
+
     return () => {
       return h("div", { class: "w-full relative overflow-hidden" }, [
         h("div", { class: "w-full relative overflow-hidden" }, [
@@ -86,11 +93,17 @@ export const Table = defineComponent({
                 onSort: handleOnSort,
                 columns: props.inertable.columns,
               }),
-              h(Tbody, {
-                loading: loading.value,
-                data: props.inertable.data.data,
-                columns: props.inertable.columns,
-              }),
+              h(
+                Tbody,
+                {
+                  loading: loading.value,
+                  data: props.inertable.data.data,
+                  columns: props.inertable.columns,
+                },
+                {
+                  ...mappedSlots,
+                }
+              ),
             ]
           ),
         ]),
