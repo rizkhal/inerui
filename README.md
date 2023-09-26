@@ -3,7 +3,7 @@
 
 ## Installation
 
-> [!NOTE]
+> [!WARNING]
 > Under Development Purpose
 
 ## Components
