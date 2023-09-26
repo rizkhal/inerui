@@ -54,7 +54,7 @@ const Tab = defineComponent({
             "div",
             {
               class:
-                "sticky top-0 mt-4 text-sm font-medium text-center text-primary-500 border-b border-slate-200 dark:text-primary-400 dark:border-primary-700",
+                "sticky top-0 mt-4 text-sm font-medium text-center text-inerui-500 border-b border-slate-200 dark:text-inerui-400 dark:border-inerui-700",
             },
             [
               h(
@@ -69,9 +69,9 @@ const Tab = defineComponent({
                       {
                         key: index.toString(),
                         onClick: () => handleOnChange(index),
-                        class: `inline-block p-2 border-b-2 rounded-t-lg hover:text-primary-600 hover:border-primary-500 dark:hover:text-primary-300 transition-all duration-300 ${
+                        class: `inline-block p-2 border-b-2 rounded-t-lg hover:text-inerui-600 hover:border-inerui-500 dark:hover:text-inerui-300 transition-all duration-300 ${
                           index === selected.value
-                            ? "border-primary-500"
+                            ? "border-inerui-500"
                             : "border-transparent"
                         }`,
                       },

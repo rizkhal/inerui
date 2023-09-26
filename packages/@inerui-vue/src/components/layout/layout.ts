@@ -117,20 +117,20 @@ export const Sidebar = defineComponent({
                                       "button",
                                       {
                                         onClick: () => onNavigate(path),
-                                        class: `group dark:text-white transition hover:text-primary-600 py-2 px-3 rounded-md w-full inline-flex items-center space-x-2 ${
+                                        class: `group dark:text-white transition hover:text-inerui-600 py-2 px-3 rounded-md w-full inline-flex items-center space-x-2 ${
                                           route().has(path) &&
                                           route().current(path)
-                                            ? "text-primary-600"
+                                            ? "text-inerui-600"
                                             : "text-slate-600"
                                         }`,
                                       },
                                       [
                                         h("span", { class: "text-sm" }, text),
                                         h("div", {
-                                          class: `w-2.5 h-2.5 group-hover:bg-primary-600 absolute left-[8px] mt-0.5 rounded-full border border-gray-100 ${
+                                          class: `w-2.5 h-2.5 group-hover:bg-inerui-600 absolute left-[8px] mt-0.5 rounded-full border border-gray-100 ${
                                             route().has(path) &&
                                             route().current(path)
-                                              ? "bg-primary-600"
+                                              ? "bg-inerui-600"
                                               : "bg-slate-300"
                                           }`,
                                         }),

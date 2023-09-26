@@ -1,7 +1,7 @@
-import { Icon } from "components/atoms";
+import { Icon as Iconify } from "@iconify/vue";
 import { defineComponent, h } from "vue";
 
-type TColumn = {
+export type TColumn = {
   na: boolean;
   blank: boolean;
   sortable: boolean;
@@ -12,28 +12,18 @@ type TColumn = {
 };
 
 export default defineComponent({
+  name: "Thead",
   props: ["columns", "params"],
-  setup(props) {
-    const sortIs = (column: any, direction: string): boolean => {
-      return (
-        column.sortable &&
-        props.params.direction == direction &&
-        props.params.column == column.column
-      );
+  emits: ["sort"],
+  setup(props, { emit }) {
+    const handleOnSort = ({ column }: any) => {
+      emit("sort", column);
     };
 
-    const renderSort = (column: any) => {
-      if (sortIs(column, "asc")) {
-        return h(Icon, { icon: "heroicons:arrow-small-down" });
-      } else if (sortIs(column, "desc")) {
-        return h(Icon, { icon: "heroicons:arrow-small-down" });
-      }
+    return () => {
+      //
 
-      return null;
-    };
-
-    return () =>
-      h(
+      return h(
         "thead",
         {
           class: "",
@@ -46,6 +36,7 @@ export default defineComponent({
                 {
                   scope: "col",
                   key: index.toString(),
+                  onClick: () => handleOnSort(column),
                   class: `p-4 bg-slate-200 text-left text-xs font-medium cursor-pointer
                   ${index === 0 ? "rounded-tl-md" : null}
                   ${
@@ -54,13 +45,34 @@ export default defineComponent({
                 },
                 h(
                   "div",
-                  { class: "inline-flex w-full justify-between items-center" },
-                  [h("span", {}, column.text), renderSort(column)]
+                  { class: "inline-flex w-full space-x-4 items-center" },
+                  [
+                    h("span", {}, column.text),
+                    column.sortable &&
+                    props.params.column === column.column &&
+                    props.params.direction === "asc"
+                      ? h(
+                          "span",
+                          {},
+                          h(Iconify, { icon: "heroicons:arrow-small-down" })
+                        )
+                      : null,
+                    column.sortable &&
+                    props.params.column === column.column &&
+                    props.params.direction === "desc"
+                      ? h(
+                          "span",
+                          {},
+                          h(Iconify, { icon: "heroicons:arrow-small-up" })
+                        )
+                      : null,
+                  ]
                 )
               );
             }),
           ]),
         ]
       );
+    };
   },
 });

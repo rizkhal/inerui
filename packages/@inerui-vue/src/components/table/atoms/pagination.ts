@@ -47,7 +47,7 @@ export default defineComponent({
               {
                 disabled: noPreviousPage.value,
                 onClick: () => emit("loadPage", 1),
-                class: `inline-flex justify-center items-center p-2.5 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:text-sm focus:ring-1 focus:ring-primary-600 focus:border-primary-600 ${
+                class: `inline-flex justify-center items-center p-2.5 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:text-sm focus:ring-1 focus:ring-inerui-600 focus:border-inerui-600 ${
                   noPreviousPage.value ? "opacity-50 cursor-not-allowed" : null
                 }`,
               },
@@ -58,7 +58,7 @@ export default defineComponent({
               {
                 disabled: noPreviousPage.value,
                 onClick: () => emit("loadPage", props.current - 1),
-                class: `inline-flex justify-center items-center p-2.5 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:text-sm focus:ring-1 focus:ring-primary-600 focus:border-primary-600 ${
+                class: `inline-flex justify-center items-center p-2.5 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:text-sm focus:ring-1 focus:ring-inerui-600 focus:border-inerui-600 ${
                   noPreviousPage.value ? "opacity-50 cursor-not-allowed" : null
                 }`,
               },
@@ -90,7 +90,7 @@ export default defineComponent({
               {
                 disabled: noNextPage.value,
                 onClick: () => emit("loadPage", props.current + 1),
-                class: `inline-flex justify-center items-center p-2.5 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:text-sm focus:ring-1 focus:ring-primary-600 focus:border-primary-600 ${
+                class: `inline-flex justify-center items-center p-2.5 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:text-sm focus:ring-1 focus:ring-inerui-600 focus:border-inerui-600 ${
                   noNextPage.value ? "opacity-50 cursor-not-allowed" : null
                 }`,
               },
@@ -101,7 +101,7 @@ export default defineComponent({
               {
                 disabled: noNextPage.value,
                 onClick: () => emit("loadPage", props.last),
-                class: `inline-flex justify-center items-center p-2.5 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:text-sm focus:ring-1 focus:ring-primary-600 focus:border-primary-600 ${
+                class: `inline-flex justify-center items-center p-2.5 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:text-sm focus:ring-1 focus:ring-inerui-600 focus:border-inerui-600 ${
                   noNextPage.value ? "opacity-50 cursor-not-allowed" : null
                 }`,
               },

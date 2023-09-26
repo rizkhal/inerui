@@ -3,17 +3,19 @@ import { Thead, Tbody, Pagination } from "./atoms";
 import { defineComponent, h, reactive, ref, watch } from "vue";
 import { router } from "@inertiajs/vue3";
 import { Search } from "components/search";
+import { wait } from "../../utils";
 
 export type TTableProps = {
   inertable: {
     data: any;
+    filters: any;
     columns: Object;
   };
 };
 
 export const Table = defineComponent({
   props: ["inertable"],
-  emits: ["onChange"],
+  emits: ["change"],
   setup(props: TTableProps, { emit }) {
     const loading = ref<boolean>(false);
 
@@ -22,24 +24,35 @@ export const Table = defineComponent({
     });
 
     const params = reactive({
-      column: props.inertable.data.filters?.column,
-      search: props.inertable.data.filters?.search,
-      direction: props.inertable.data.filters?.direction,
-      perpage: props.inertable.data.filters?.perpage ?? 15,
       page: props.inertable.data.current_page,
+      // filters
+      column: props.inertable.filters?.column,
+      direction: props.inertable.filters?.direction,
+      search: props.inertable.filters?.search ?? null,
+      perpage: props.inertable.filters?.perpage ?? 15,
     });
 
     const handleOnLoadPageEvent = (page: number) => {
       params.page = page;
     };
 
+    const handleOnSort = (column: string) => {
+      params.column = column;
+      params.direction = params.direction === "asc" ? "desc" : "asc";
+    };
+
     watch(
       () => params,
       (value) => {
-        loading.value = true;
-        debounce(() => {
-          emit("onChange", pickBy(value));
-        }, 300)();
+        wait(200)
+          .then(() => {
+            loading.value = true;
+          })
+          .then(
+            debounce(() => {
+              emit("change", pickBy(value));
+            }, 700)
+          );
       },
       { deep: true }
     );
@@ -53,7 +66,14 @@ export const Table = defineComponent({
               class:
                 "py-4 mb-3 w-full inline-flex items-center justify-between",
             },
-            [h(Search), h(Search)]
+            [
+              h(Search, {
+                modelValue: params.search,
+                "onUpdate:modelValue": (value) => {
+                  params.search = value;
+                },
+              }),
+            ]
           ),
           h(
             "table",
@@ -62,7 +82,8 @@ export const Table = defineComponent({
             },
             [
               h(Thead, {
-                params: params,
+                params,
+                onSort: handleOnSort,
                 columns: props.inertable.columns,
               }),
               h(Tbody, {
