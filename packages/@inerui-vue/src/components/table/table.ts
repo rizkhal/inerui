@@ -1,13 +1,13 @@
 import { debounce, pickBy } from "lodash";
-import { Thead, Tbody, Pagination } from "./atoms";
+import { Thead, Tbody, Pagination, Filter } from "./atoms";
 import { defineComponent, h, reactive, ref, watch } from "vue";
 import { router } from "@inertiajs/vue3";
-import { Search } from "components/search";
 import { wait } from "../../utils";
 
 export type TTableProps = {
   inertable: {
     data: any;
+    fields: any;
     filters: any;
     columns: Object;
   };
@@ -26,10 +26,12 @@ export const Table = defineComponent({
     const params = reactive({
       page: props.inertable.data.current_page,
       // filters
+      fields: props.inertable.fields ?? [],
       column: props.inertable.filters?.column,
       direction: props.inertable.filters?.direction,
       search: props.inertable.filters?.search ?? null,
       perpage: props.inertable.filters?.perpage ?? 15,
+      filters: props.inertable.filters?.filters ?? null,
     });
 
     const handleOnLoadPageEvent = (page: number) => {
@@ -67,21 +69,9 @@ export const Table = defineComponent({
     return () => {
       return h("div", { class: "w-full relative overflow-hidden" }, [
         h("div", { class: "w-full relative overflow-hidden" }, [
-          h(
-            "div",
-            {
-              class:
-                "py-4 mb-3 w-full inline-flex items-center justify-between",
-            },
-            [
-              h(Search, {
-                modelValue: params.search,
-                "onUpdate:modelValue": (value) => {
-                  params.search = value;
-                },
-              }),
-            ]
-          ),
+          h(Filter, {
+            params,
+          }),
           h(
             "table",
             {

@@ -30,15 +30,23 @@ export default defineComponent({
         "div",
         {
           class:
-            "border border-t-transparent rounded-bl-md rounded-br-md bg-white sm:flex items-center w-full sm:justify-between border-t border-gray-200 p-4",
+            "border border-x-transparent rounded-bl-md rounded-br-md bg-white sm:flex items-center w-full sm:justify-between border-t border-gray-200 p-4",
         },
         [
           h("div", { class: "flex items-center mb-4 sm:mb-0" }, [
             h("div", { class: "text-sm font-normal text-gray-500" }, [
-              h(
-                "span",
-                `Menampilkan ${props.from} ke ${props.to} dari ${props.total}`
-              ),
+              h("p", { class: "inline-flex space-x-2" }, [
+                h("span", "Baris"),
+                h("span", { class: "text-gray-900 font-semibold" }, props.from),
+                h("span", "ke"),
+                h("span", { class: "text-gray-900 font-semibold" }, props.to),
+                h("span", "dari"),
+                h(
+                  "span",
+                  { class: "text-gray-900 font-semibold" },
+                  props.total
+                ),
+              ]),
             ]),
           ]),
           h("div", { class: "flex items-center space-x-3" }, [

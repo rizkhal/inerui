@@ -26,7 +26,7 @@ export default defineComponent({
       return h(
         "thead",
         {
-          class: "",
+          class: "border-y",
         },
         [
           h("tr", [
@@ -37,7 +37,7 @@ export default defineComponent({
                   scope: "col",
                   key: index.toString(),
                   onClick: () => handleOnSort(column),
-                  class: `p-4 bg-slate-200 text-left text-xs font-medium cursor-pointer
+                  class: `p-4 text-left text-xs font-medium cursor-pointer
                   ${index === 0 ? "rounded-tl-md" : null}
                   ${
                     index === props.columns.length - 1 ? "rounded-tr-md" : null
