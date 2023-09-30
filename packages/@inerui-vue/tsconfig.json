@@ -1,8 +1,15 @@
 {
-  "include": ["src", "types"],
+  "include": [
+    "src",
+    "types"
+  ],
   "compilerOptions": {
     "module": "esnext",
-    "lib": ["dom", "esnext", "dom.iterable"],
+    "lib": [
+      "dom",
+      "esnext",
+      "dom.iterable"
+    ],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
@@ -16,8 +23,13 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "@inerui/vue": ["src"],
-      "*": ["src/*", "node_modules/*"]
+      "@inerui/vue": [
+        "src"
+      ],
+      "*": [
+        "src/*",
+        "node_modules/*"
+      ]
     },
     "esModuleInterop": true,
     "target": "ESNext",
@@ -27,5 +39,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "exclude": ["dist"]
+  "exclude": [
+    "dist"
+  ]
 }

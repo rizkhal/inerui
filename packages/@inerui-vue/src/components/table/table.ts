@@ -1,7 +1,7 @@
 import { debounce, pickBy } from "lodash";
 import { Thead, Tbody, Pagination, Filter } from "./atoms";
-import { defineComponent, h, onMounted, reactive, ref, watch } from "vue";
-import { router } from "@inertiajs/vue3";
+import { defineComponent, h, reactive, ref, watch } from "vue";
+import { router as InertiaRouter } from "@inertiajs/vue3";
 import { wait } from "../../utils";
 
 export type TTableProps = {
@@ -19,7 +19,7 @@ export const Table = defineComponent({
   setup(props: TTableProps, { slots, emit }) {
     const loading = ref<boolean>(false);
 
-    router.on("success", () => {
+    InertiaRouter.on("success", () => {
       loading.value = false;
     });
 
@@ -56,7 +56,10 @@ export const Table = defineComponent({
           })
           .then(
             debounce(() => {
-              emit("change", pickBy(value));
+              InertiaRouter.get(window.location.pathname, pickBy(value), {
+                preserveState: true,
+                replace: true,
+              });
             }, 700)
           );
       },

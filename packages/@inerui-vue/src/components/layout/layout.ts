@@ -1,6 +1,6 @@
 import route from "ziggy-js";
 import { Icon } from "../atoms";
-import { router } from "@inertiajs/vue3";
+import { router as InertiaRouter } from "@inertiajs/vue3";
 import { Transition, defineComponent, h, ref } from "vue";
 
 type TMenu = {
@@ -43,7 +43,7 @@ export const Sidebar = defineComponent({
   setup({ menus, onClick: onNavigate }) {
     const isOpen = ref<any>([]);
 
-    router.on("navigate", () => {
+    InertiaRouter.on("navigate", () => {
       menus.map(({ childrens }: TMenuItem, index: number) => {
         if (childrens) {
           isOpen.value[index] = childrens.filter(
@@ -171,7 +171,14 @@ export const Sidebar = defineComponent({
 export const Layout = defineComponent({
   props: ["menus"],
   emits: ["onNavigate"],
-  setup({ menus }, { slots, emit }) {
+  setup({ menus }, { slots }) {
+    const onNavigate = (path: string) => {
+      InertiaRouter.visit(route(path), {
+        replace: true,
+        preserveScroll: true,
+      });
+    };
+
     return () => {
       return h("div", { class: "w-full min-h-scree relative" }, [
         h("div", { class: "inline-flex w-full" }, [
@@ -183,7 +190,7 @@ export const Layout = defineComponent({
             },
             h(Sidebar, {
               menus: menus,
-              onClick: (path: string) => emit("onNavigate", path),
+              onClick: (path: string) => onNavigate(path),
             })
           ),
           h(
