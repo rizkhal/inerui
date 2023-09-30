@@ -1,6 +1,6 @@
 import { debounce, pickBy } from "lodash";
 import { Thead, Tbody, Pagination, Filter } from "./atoms";
-import { defineComponent, h, reactive, ref, watch } from "vue";
+import { defineComponent, h, onMounted, reactive, ref, watch } from "vue";
 import { router } from "@inertiajs/vue3";
 import { wait } from "../../utils";
 
@@ -26,12 +26,16 @@ export const Table = defineComponent({
     const params = reactive({
       page: props.inertable.data.current_page,
       // filters
-      fields: props.inertable.fields ?? [],
       column: props.inertable.filters?.column,
       direction: props.inertable.filters?.direction,
       search: props.inertable.filters?.search ?? null,
       perpage: props.inertable.filters?.perpage ?? 15,
-      filters: props.inertable.filters?.filters ?? null,
+      filters: props.inertable.filters.filters
+        ? Object.keys(props.inertable.filters.filters).reduce(
+            (ac, a) => ({ ...ac, [a]: props.inertable.filters.filters[a] }),
+            {}
+          )
+        : null,
     });
 
     const handleOnLoadPageEvent = (page: number) => {
@@ -71,6 +75,7 @@ export const Table = defineComponent({
         h("div", { class: "w-full relative overflow-hidden" }, [
           h(Filter, {
             params,
+            fields: props.inertable.fields ?? [],
           }),
           h(
             "table",
